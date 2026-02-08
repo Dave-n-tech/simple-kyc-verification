@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id   String @id @default(uuid())
+  firstname  String
+  lastname   String
+  email      String @unique
+  password   String
+  isEmailVerified Boolean @default(false)
+  role Role @default(USER)
+  kycStatus KYCStatus @default(UNVERIFIED)
+  createdAt DateTime @default(now())
+  kyc    KYC?
+  otps   EmailVerificationOTP[]
+}
+
+model KYC {
+  id String @id @default(uuid())
+  fullName String
+  userId String @unique
+  dateOfBirth DateTime
+  idType String
+  idNumber String
+  documentUrl String
+  status KYCStatus @default(UNVERIFIED)
+  reviewedAt DateTime?
+  createdAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+model EmailVerificationOTP {
+  id String @id @default(uuid())
+  userId String
+  email String
+  token String @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum KYCStatus {
+  UNVERIFIED
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
