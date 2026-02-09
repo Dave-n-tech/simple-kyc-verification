@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import jwt from "jsonwebtoken";
 import Link from "next/link";
-import { KYCStatus } from "@prisma/client";
+import { KYCStatus } from "../types";
 import SignOutButton from "./signout-button";
 
 export default async function Dashboard() {

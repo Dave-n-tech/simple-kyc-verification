@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { KYCStatus } from "@prisma/client";
+import { KYCStatus } from "../../types";
 import KycActions from "./kyc-actions";
 import Link from "next/link";
 import SignOutButton from "@/app/dashboard/signout-button";
