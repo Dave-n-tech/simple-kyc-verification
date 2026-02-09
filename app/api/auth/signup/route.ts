@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcrypt";
 import { signToken } from "@/lib/auth";
-import { KYCStatus } from "../../../types";
+import { KYCStatus } from "@/app/types";
 
 export async function POST(req: Request) {
   try {

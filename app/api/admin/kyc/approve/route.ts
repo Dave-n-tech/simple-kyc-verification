@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { KYCStatus } from "@prisma/client";
+import { KYCStatus } from "@/app/types";
 
 export async function POST(req: Request) {
   const { kycId } = await req.json();
