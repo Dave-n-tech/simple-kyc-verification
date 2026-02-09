@@ -19,10 +19,10 @@ export default async function AdminDashboard() {
     },
   });
 
-  const pendingKycs = kycs.filter((k) => k.status === KYCStatus.PENDING);
-  const unverifiedKycs = kycs.filter((k) => k.status === KYCStatus.UNVERIFIED);
+  const pendingKycs = kycs.filter((k: any) => k.status === KYCStatus.PENDING);
+  const unverifiedKycs = kycs.filter((k: any) => k.status === KYCStatus.UNVERIFIED);
 
-  const verifiedKycs = kycs.filter((k) => k.status === KYCStatus.VERIFIED);
+  const verifiedKycs = kycs.filter((k: any) => k.status === KYCStatus.VERIFIED);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -68,7 +68,7 @@ export default async function AdminDashboard() {
             </div>
           ) : (
             <ul className="divide-y divide-gray-100">
-              {pendingKycs.map((kyc) => (
+              {pendingKycs.map((kyc: any) => (
                 <li
                   key={kyc.id}
                   className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-gray-50 transition-colors"
@@ -120,7 +120,7 @@ export default async function AdminDashboard() {
             </div>
           ) : (
             <ul className="divide-y divide-gray-100">
-              {verifiedKycs.map((kyc) => (
+              {verifiedKycs.map((kyc: any) => (
                 <li
                   key={kyc.id}
                   className="p-6 hover:bg-gray-50 transition-colors"
