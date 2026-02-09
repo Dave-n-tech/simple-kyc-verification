@@ -1,10 +1,10 @@
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-export const dynamic = "force-dynamic";
-export const runtime = "nodejs";
 
 export async function GET() {
   const token = (await cookies()).get("auth")?.value;

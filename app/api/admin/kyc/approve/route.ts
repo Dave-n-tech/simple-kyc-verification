@@ -1,12 +1,19 @@
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { KYCStatus } from "@/app/types";
 
-export const dynamic = "force-dynamic";
-export const runtime = "nodejs";
 
 export async function POST(req: Request) {
   const { kycId } = await req.json();
+
+  if (!kycId) {
+    return NextResponse.json(
+      { error: "Missing kycId" },
+      { status: 400 }
+    );
+  }
 
   const kyc = await prisma.kYC.update({
     where: { id: kycId },
