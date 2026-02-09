@@ -2,6 +2,9 @@ import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { KYCStatus } from "@/app/types";
 
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 export async function GET(req: Request) {
   const kycs = await prisma.kYC.findMany({
       where: {
