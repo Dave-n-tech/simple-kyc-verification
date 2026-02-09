@@ -2,11 +2,10 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Navbar from "./components/navbar";
-import { Role } from "@prisma/client";
 
 export default function Home() {
   const [userId, setUserId] = useState<string | null>(null);
-  const [userRole, setUserRole] = useState<Role | null>(null);
+  const [userRole, setUserRole] = useState<string | null>(null);
 
   useEffect(() => {
     fetch("/api/auth/me")

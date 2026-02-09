@@ -1,12 +1,11 @@
 import Link from "next/link";
-import { Role } from "@prisma/client";
 
 export default function Navbar({
   userId,
   userRole,
 }: {
   userId: string | null;
-  userRole: Role | null;
+  userRole: string | null;
 }) {
   return (
     <nav className="bg-white border-b px-6 py-4 flex items-center justify-between">
@@ -16,7 +15,7 @@ export default function Navbar({
 
       {userId ? (
         <Link
-          href={userRole === Role.ADMIN ? "/admin/dashboard" : "/dashboard"}
+          href={userRole === "ADMIN" ? "/admin/dashboard" : "/dashboard"}
           className="text-sm font-medium bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors"
         >
           Dashboard
