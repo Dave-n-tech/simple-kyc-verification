@@ -89,6 +89,13 @@ export default async function AdminDashboard() {
                       Submitted: {kyc.createdAt.toLocaleDateString()}
                     </p>
                   </div>
+                  <div>
+                    <img
+                      src={kyc.documentUrl}
+                      alt="KYC Document"
+                      className="w-48 h-32 object-cover rounded border"
+                    />
+                  </div>
 
                   <KycActions kycId={kyc.id} />
                 </li>
@@ -133,6 +140,13 @@ export default async function AdminDashboard() {
                     <p className="text-xs text-gray-400">
                       Submitted: {kyc.createdAt.toLocaleDateString()}
                     </p>
+                  </div>
+                  <div>
+                    <img
+                      src={kyc.documentUrl}
+                      alt="KYC Document"
+                      className="w-48 h-32 object-cover rounded border"
+                    />
                   </div>
 
                 </li>

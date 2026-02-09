@@ -13,47 +13,56 @@ export default function SignupPage() {
     password: "",
   });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     if (!form.firstname || !form.lastname || !form.email || !form.password) {
       setError("All fields are required");
       return;
     }
 
-    const res = await fetch("/api/auth/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(form),
-    });
+    try {
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
 
-    if (!res.ok) {
-      const data = await res.json();
-      setError(data.error || "Signup failed");
-      return;
+      if (!res.ok) {
+        const data = await res.json();
+        setError(data.error || "Signup failed");
+        return;
+      }
+
+      const otpRes = await fetch("/api/auth/send-otp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: form.email }),
+      });
+
+      if (!otpRes.ok) {
+        const data = await otpRes.json();
+        setError(data.error || "Failed to send OTP");
+        return;
+      }
+
+      console.log("Signup successful, OTP sent");
+
+      router.push("/auth/verify-email");
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      setError("An unexpected error occurred");
+    } finally {
+      setLoading(false);
     }
-
-    const otpRes = await fetch("/api/auth/send-otp", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: form.email }),
-    });
-
-    if (!otpRes.ok) {
-      const data = await otpRes.json();
-      setError(data.error || "Failed to send OTP");
-      return;
-    }
-
-    console.log("Signup successful, OTP sent");
-
-    router.push("/auth/verify-email"); // Redirect to email verification page after successful signup
   };
 
   return (
@@ -92,8 +101,9 @@ export default function SignupPage() {
           {error && <p className="text-red-500">{error}</p>}
 
           <button
+            disabled={loading}
             type="submit"
-            className="cursor-pointer w-full bg-black text-white py-2 rounded"
+            className="disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer w-full bg-black text-white py-2 rounded"
           >
             Sign Up
           </button>

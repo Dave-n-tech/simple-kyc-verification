@@ -8,25 +8,33 @@ export default function LoginPage() {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
 
-    const res = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(form),
-    });
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
 
-    if (!res.ok) {
-      const data = await res.json();
-      console.error("Login failed:", data.error);
-      return;
+      if (!res.ok) {
+        const data = await res.json();
+        console.error("Login failed:", data.error);
+        return;
+      }
+
+      window.location.href = "/dashboard";
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+    } finally {
+      setLoading(false);
     }
-
-    window.location.href = "/dashboard";
   };
 
   return (
@@ -51,8 +59,9 @@ export default function LoginPage() {
           />
 
           <button
+            disabled={loading}
             type="submit"
-            className="cursor-pointer w-full bg-black text-white py-2 rounded"
+            className="disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer w-full bg-black text-white py-2 rounded"
           >
             Login
           </button>
