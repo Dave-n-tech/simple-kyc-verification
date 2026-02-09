@@ -4,6 +4,9 @@ import bcrypt from "bcrypt";
 import { signToken } from "@/lib/auth";
 import { KYCStatus } from "@/app/types";
 
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 export async function POST(req: Request) {
   try {
     const { firstname, lastname, email, password } = await req.json();

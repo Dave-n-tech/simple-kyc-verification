@@ -2,6 +2,9 @@ import { prisma } from "@/lib/prisma";
 import { generateOTP } from "@/lib/helpers";
 import nodemailer from "nodemailer";
 
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 export async function POST(req: Request) {
   const { email } = await req.json();
   const otp = generateOTP();
